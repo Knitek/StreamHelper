@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Markup;
 
 
@@ -147,7 +149,7 @@ namespace StreamHelper
                 if(value!= winLoseOutputPath)
                 {
                     winLoseOutputPath = value;
-                    RaisePropertyChanged("OutputPath");
+                    RaisePropertyChanged("WinLoseOutputPath");
                     WriteResultToFile();
                 }
             }
@@ -163,7 +165,7 @@ namespace StreamHelper
                 if(eqOutputPath != value)
                 {
                     eqOutputPath = value;
-                    RaisePropertyChanged(EQOutputPath);
+                    RaisePropertyChanged("EQOutputPath");
                     WriteEQValueToFile();
                 }
             }
@@ -222,10 +224,15 @@ namespace StreamHelper
         public CommandBase SubtractWinCommand { get; set; }
         public CommandBase SubtractLoseCommand { get; set; }
         public CommandBase ResetCommand { get; set; }
-
         public CommandBase AddProfitCommand { get; set; }
         public CommandBase SubtractProfitCommand { get; set; }
+
+        public CommandBase WinLoseOutputPathCommand { get; set; }
+        public CommandBase EQOutputPathCommand { get; set; }
+        public CommandBase ProfitOutputPathCommand { get; set; }
+
         public CommandBase ResetProfitCommand { get; set; }
+        public CommandBase AboutWindowCommand { get; set; }
         public MainVindowViewModel()
         {
             WinLoseOutputPath = string.Empty;
@@ -241,9 +248,14 @@ namespace StreamHelper
             SubtractLoseCommand = new CommandBase(SubtractLose);
             ResetCommand = new CommandBase(Reset);
 
+            WinLoseOutputPathCommand = new CommandBase(WinLoseOutputPathFileSelect);
+            EQOutputPathCommand = new CommandBase(EQOutputPathFileSelect);
+            ProfitOutputPathCommand = new CommandBase(ProfitOutputPathFileSelect);
+
             AddProfitCommand = new CommandBase(AddProfit);
             SubtractProfitCommand = new CommandBase(SubtractProfit);
             ResetProfitCommand = new CommandBase(ResetProfit);
+            AboutWindowCommand = new CommandBase(AboutWindow);
         }
 
         private void AddWin()
@@ -299,6 +311,35 @@ namespace StreamHelper
             if (string.IsNullOrWhiteSpace(ProfitOutputPath) is false && System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(ProfitOutputPath)))
                 System.IO.File.WriteAllText(ProfitOutputPath, $"{ProfitTextFormat.Replace("{1}", TotalProfitValue.ToString())}");
         }
+
+        private void WinLoseOutputPathFileSelect()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt"; // Default file extension
+            dlg.Filter = "Text documents (.txt)|*.txt";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+                WinLoseOutputPath = dlg.FileName;
+        }
+        private void EQOutputPathFileSelect()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt"; // Default file extension
+            dlg.Filter = "Text documents (.txt)|*.txt";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+                EQOutputPath = dlg.FileName;
+        }
+        private void ProfitOutputPathFileSelect()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt"; // Default file extension
+            dlg.Filter = "Text documents (.txt)|*.txt";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+                ProfitOutputPath = dlg.FileName;
+        }
+
         private void LoadSave()
         {
             if (System.IO.File.Exists("Save.txt"))
@@ -327,6 +368,13 @@ namespace StreamHelper
                 $"{EQOutputPath}\r\n{EQTextFormat}\r\n{ProfitOutputPath}\r\n{ProfitTextFormat}\r\n" +
                 $"{EQValue}\r\n{TotalProfitValue}");
         }
+
+        public void AboutWindow()
+        {
+            AboutWindow aboutWindow = new AboutWindow("StreamHelper", "20250218 v0.2.1", "Program do nauki słówek.")
+            { Top = App.Current.MainWindow.Top, Left = App.Current.MainWindow.Left };
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void RaisePropertyChanged(string property)
         {
