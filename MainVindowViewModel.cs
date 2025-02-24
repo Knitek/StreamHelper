@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Markup;
+using System.IO;
 
 
 namespace StreamHelper
@@ -25,7 +26,7 @@ namespace StreamHelper
         private string eqTextFormat { get; set; }
         private string profitOutputPath { get; set; }
         private string profitTextFormat { get; set; }
-
+        private ToolTips toolTips { get; set; }
         public int Win
         {
             get
@@ -219,6 +220,22 @@ namespace StreamHelper
             }
         }
 
+        public ToolTips ToolTips
+        {
+            get
+            {
+                return toolTips;
+            }
+            set
+            {
+                if(value != toolTips)
+                {
+                    toolTips = value;
+                    RaisePropertyChanged("ToolTips");
+                }
+            }
+        }
+
         public CommandBase AddWinCommand { get; set; }
         public CommandBase AddLoseCommand { get; set; }
         public CommandBase SubtractWinCommand { get; set; }
@@ -342,25 +359,48 @@ namespace StreamHelper
 
         private void LoadSave()
         {
-            if (System.IO.File.Exists("Save.txt"))
+            try
             {
-                var tmp = System.IO.File.ReadAllLines("Save.txt");
-                if (tmp.Length >= 10)
+                if(System.IO.File.Exists("ToolTips.json"))
                 {
-                    WinLoseOutputPath = tmp[0];
-                    WinLoseTextFormat = tmp[1];
-                    int w, l;
-                    if (int.TryParse(tmp[2], out w)) Win = w;
-                    if (int.TryParse(tmp[3], out l)) Lose = l;          
-                    EQOutputPath = tmp[4];
-                    EQTextFormat = tmp[5];
-                    ProfitOutputPath = tmp[6];
-                    ProfitTextFormat = tmp[7];
-                    double eqV, tPV;
-                    if(double.TryParse(tmp[8], out eqV)) EQValue = eqV;
-                    if (double.TryParse(tmp[9], out tPV)) TotalProfitValue = tPV;
+                    using (var strem = new  System.IO.FileStream("ToolTips.json", System.IO.FileMode.Open,FileAccess.Read))
+                    {
+                        var tmp = System.Text.Json.JsonSerializer.Deserialize<ToolTips>(strem);
+                        if(tmp!=null)
+                            ToolTips = tmp;
+                        else
+                            ToolTips = new ToolTips();
+                    }
+                }
+                else
+                {
+                    ToolTips = new ToolTips();
                 }
             }
+            catch { }
+            try
+            {
+                if (System.IO.File.Exists("Save.txt"))
+                {
+                    var tmp = System.IO.File.ReadAllLines("Save.txt");
+                    if (tmp.Length >= 10)
+                    {
+                        WinLoseOutputPath = tmp[0];
+                        WinLoseTextFormat = tmp[1];
+                        int w, l;
+                        if (int.TryParse(tmp[2], out w)) Win = w;
+                        if (int.TryParse(tmp[3], out l)) Lose = l;
+                        EQOutputPath = tmp[4];
+                        EQTextFormat = tmp[5];
+                        ProfitOutputPath = tmp[6];
+                        ProfitTextFormat = tmp[7];
+                        double eqV, tPV;
+                        if (double.TryParse(tmp[8], out eqV)) EQValue = eqV;
+                        if (double.TryParse(tmp[9], out tPV)) TotalProfitValue = tPV;
+                    }
+                }
+            }
+            catch { }
         }
         public void SaveState()
         {

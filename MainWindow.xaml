@@ -51,9 +51,9 @@
                             <RowDefinition Height="36px"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Content="EQ value:"/>
-                        <TextBox Grid.Row="1" Text="{Binding EQValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Delay=2000}"  Height="30px" Margin="2px" FontSize="20"/>
+                        <TextBox Grid.Row="1" Text="{Binding EQValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Delay=2000}"  Height="30px" Margin="2px" FontSize="20" ToolTip="{Binding ToolTips.EQValue}"/>
                         <Label Grid.Row="2" Content="Total profit:"/>
-                        <TextBox Grid.Row="3" Text="{Binding TotalProfitValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Delay=2000}"  Height="30px" Margin="2px" FontSize="20" />
+                        <TextBox Grid.Row="3" Text="{Binding TotalProfitValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,Delay=2000}"  Height="30px" Margin="2px" FontSize="20" ToolTip="{Binding ToolTips.TotalProfil}" />
                         <Label Grid.Row="4" Content="Add profit:"/>
                         <Grid Grid.Row="5" >
                             <Grid.ColumnDefinitions>
@@ -61,7 +61,7 @@
                                 <ColumnDefinition Width="100px"/>
                                 <ColumnDefinition Width="25px"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox  Text="{Binding AddProfitValue, Mode=TwoWay}"   Height="30px" Margin="2px" FontSize="20" />
+                            <TextBox  Text="{Binding AddProfitValue, Mode=TwoWay}"   Height="30px" Margin="2px" FontSize="20" ToolTip="{Binding ToolTips.AddProfit}"/>
                             <Button Content="+ profit" Command="{Binding AddProfitCommand}" Width="100px" Grid.Column="1" />
                             <Button Content="-" Command="{Binding SubtractProfitCommand}" Width="25px" Grid.Column="2" />
                         </Grid>
@@ -86,20 +86,20 @@
                         <RowDefinition Height="30px"/>
                     </Grid.RowDefinitions>
                     <Label Content="Win lose path:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding WinLoseOutputPath, Mode=TwoWay}" ToolTip="paste fullfilepath" Margin="2px" Grid.Row="0" Grid.Column="1" FontSize="20" VerticalAlignment="Center" />
+                    <TextBox Text="{Binding WinLoseOutputPath, Mode=TwoWay}"  Margin="2px" Grid.Row="0" Grid.Column="1" FontSize="20" VerticalAlignment="Center" ToolTip="{Binding ToolTips.Path}" />
                     <Button Command="{Binding WinLoseOutputPathCommand}" Grid.Column="1" Grid.Row="0" Width="15" Content="..." HorizontalAlignment="Right" Margin="2px" Height="26"/>
                     <Label Content="Win lose format:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox  Text="{Binding WinLoseTextFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2px" Grid.Column="1"   Grid.Row="1" FontSize="20" VerticalAlignment="Center" />
+                    <TextBox  Text="{Binding WinLoseTextFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2px" Grid.Column="1"   Grid.Row="1" FontSize="20" VerticalAlignment="Center" ToolTip="{Binding ToolTips.WinLoseFormat}" />
                     <Label Content="EQ value path:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding EQOutputPath, Mode=TwoWay}" ToolTip="paste fullfilepath" Margin="2px" Grid.Row="2" Grid.Column="1" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding EQOutputPath, Mode=TwoWay}"  Margin="2px" Grid.Row="2" Grid.Column="1" FontSize="20" VerticalAlignment="Center" ToolTip="{Binding ToolTips.Path}"/>
                     <Button Command="{Binding EQOutputPathCommand}" Grid.Column="1" Grid.Row="2" Width="15" Content="..." HorizontalAlignment="Right" Margin="2px" Height="26"/>
                     <Label Content="EQ value format:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox  Text="{Binding EQTextFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2px" Grid.Column="1"   Grid.Row="3" FontSize="20" VerticalAlignment="Center" />
+                    <TextBox  Text="{Binding EQTextFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2px" Grid.Column="1"   Grid.Row="3" FontSize="20" VerticalAlignment="Center" ToolTip="{Binding ToolTips.WinLoseFormat}" />
                     <Label Content="Profit path:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding ProfitOutputPath, Mode=TwoWay}" ToolTip="paste fullfilepath" Margin="2px" Grid.Row="4" Grid.Column="1" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding ProfitOutputPath, Mode=TwoWay}"  Margin="2px" Grid.Row="4" Grid.Column="1" FontSize="20" VerticalAlignment="Center" ToolTip="{Binding ToolTips.Path}"/>
                     <Button Command="{Binding ProfitOutputPathCommand}" Grid.Column="1" Grid.Row="4" Width="15" Content="..." HorizontalAlignment="Right" Margin="2px" Height="26"/>
                     <Label Content="Profit format:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"/>
-                    <TextBox  Text="{Binding ProfitTextFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2px" Grid.Column="1"   Grid.Row="5" FontSize="20" VerticalAlignment="Center" />
+                    <TextBox  Text="{Binding ProfitTextFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2px" Grid.Column="1"   Grid.Row="5" FontSize="20" VerticalAlignment="Center" ToolTip="{Binding ToolTips.ProfitFormat}" />
                     <Button Content="About StreamHelper" Command="{Binding AboutWindowCommand}"  Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Height="25" FontSize="10"/>
                 </Grid>
             </TabItem>
